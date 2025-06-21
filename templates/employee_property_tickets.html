@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Property Loan Tickets</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+<body>
+    <div class="container main-content">
+        <h2>All Property Loan Tickets</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Survey Number</th>
+                    <th>Owner Name</th>
+                    <th>Area (sq.ft)</th>
+                    <th>Document</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket._id }}</td>
+                    <td>{{ ticket.username }}</td>
+                    <td>{{ ticket.status|default('pending') }}</td>
+                    <td>{{ ticket.survey_number }}</td>
+                    <td>{{ ticket.owner_name }}</td>
+                    <td>{{ ticket.area }}</td>
+                    <td>{% if ticket.property_doc %}<a href="/static/uploads/{{ ticket.property_doc }}" target="_blank">View</a>{% else %}N/A{% endif %}</td>
+                    <td>
+                        {% if ticket.status == 'pending' and ticket.area %}
+                            <form method="POST" action="/send_offer_property/{{ ticket._id }}" style="display:inline;">
+                                <input type="hidden" name="offer_amount" value="{{ (ticket.area|float * 3000)|round(2) }}">
+                                <div style="margin-top:8px;">
+                                    <b>Offer Amount:</b> ₹{{ (ticket.area|float * 3000)|round(2) }}
+                                </div>
+                                <button type="submit" class="approve" style="margin-top:8px;">Give Offer</button>
+                            </form>
+                            <form method="POST" action="/decline_property_ticket/{{ ticket._id }}" style="display:inline; margin-left: 8px;">
+                                <button type="submit" class="decline">Decline</button>
+                            </form>
+                        {% elif ticket.status == 'offer_sent' %}
+                            <b>Offer Sent:</b> ₹{{ ticket.offer_amount }}
+                        {% elif ticket.status == 'offer_accepted' %}
+                            <b>Offer Accepted by Customer</b>
+                        {% elif ticket.status == 'offer_declined' or ticket.status == 'declined_by_employee' %}
+                            <b>Declined</b>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/employee_dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html> 

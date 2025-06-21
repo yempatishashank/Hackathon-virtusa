@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup - Star Finance</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: #f8fafc;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        
+        .login-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .login-sidebar {
+            flex: 1;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .banking-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .banking-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .banking-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        
+        .banking-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .banking-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .banking-features li {
+            margin: 10px 0;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+        
+        .banking-features li::before {
+            content: '✓';
+            margin-right: 10px;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .login-form-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            background: #ffffff;
+        }
+        
+        .login-form-container {
+            width: 100%;
+            max-width: 400px;
+            animation: slideInRight 0.8s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .form-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .form-subtitle {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        
+        .form-floating {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        .form-floating input, .form-floating select {
+            width: 100%;
+            padding: 16px 16px 16px 16px;
+            font-size: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .form-floating input:focus, .form-floating select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
+        }
+        
+        .form-floating label {
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            color: #94a3b8;
+            background: transparent;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .form-floating input:focus + label,
+        .form-floating input:not(:placeholder-shown) + label,
+        .form-floating select:focus + label,
+        .form-floating select:not([value=""]) + label {
+            top: -12px;
+            left: 12px;
+            font-size: 0.875rem;
+            color: #3b82f6;
+            background: #ffffff;
+            padding: 0 6px;
+            font-weight: 600;
+        }
+        
+        .show-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #94a3b8;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+        
+        .show-password:hover {
+            color: #64748b;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+        
+        .login-button:hover {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .login-button:active {
+            transform: translateY(0);
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 24px;
+        }
+        
+        .signup-link a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        
+        .signup-link a:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .login-sidebar {
+                padding: 30px 20px;
+                min-height: 40vh;
+            }
+            
+            .banking-title {
+                font-size: 2rem;
+            }
+            
+            .login-form-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-sidebar">
+            <div class="banking-content">
+                <div class="banking-icon">🏦</div>
+                <h1 class="banking-title">Star Finance</h1>
+                <p class="banking-subtitle">Join our financial services platform for secure and reliable banking solutions</p>
+                <ul class="banking-features">
+                    <li>Multi-loan management system</li>
+                    <li>Secure document verification</li>
+                    <li>Real-time application tracking</li>
+                    <li>Professional customer support</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="login-form-section">
+            <div class="login-form-container">
+                <div class="form-header">
+                    <h2 class="form-title">Create Account</h2>
+                    <p class="form-subtitle">Join Star Finance today</p>
+                </div>
+                
+                <form method="POST" autocomplete="off">
+                    <div class="form-floating">
+                        <input type="text" name="username" id="username" required placeholder=" " autocomplete="username">
+                        <label for="username">Username</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="password" name="password" id="password" required placeholder=" " autocomplete="new-password">
+                        <label for="password">Password</label>
+                        <span class="show-password" onclick="togglePassword()" title="Show/Hide Password">👁️</span>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <select name="user_type" id="user_type" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="customer">Customer</option>
+                            <option value="employee">Employee</option>
+                        </select>
+                        <label for="user_type">User Type</label>
+                    </div>
+                    
+                    <button type="submit" class="login-button">Create Account</button>
+                </form>
+                
+                <div class="signup-link">
+                    <a href="/login">Already have an account? Sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    function togglePassword() {
+        const pwd = document.getElementById('password');
+        if (pwd.type === 'password') {
+            pwd.type = 'text';
+        } else {
+            pwd.type = 'password';
+        }
+    }
+    </script>
+</body>
+</html> 

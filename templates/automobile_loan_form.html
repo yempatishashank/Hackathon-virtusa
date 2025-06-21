@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Automobile Loan Application</title>
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+<body>
+<div class="container">
+    <h2>Automobile Loan Application</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="auto_type">Type:</label>
+        <select id="auto_type" name="auto_type" required>
+            <option value="2-wheeler">2 Wheeler</option>
+            <option value="4-wheeler">4 Wheeler</option>
+        </select>
+        <label for="owner_name">Owner Name:</label>
+        <input type="text" id="owner_name" name="owner_name" required>
+        <label for="purchased_year">Purchased Year:</label>
+        <input type="number" id="purchased_year" name="purchased_year" min="1900" max="2100" required>
+        <label for="rc_doc">RC Upload (PDF):</label>
+        <input type="file" id="rc_doc" name="rc_doc" accept="application/pdf" required>
+        <label for="license_doc">License of Owner (PDF):</label>
+        <input type="file" id="license_doc" name="license_doc" accept="application/pdf" required>
+        <label for="bought_for">Bought For (On Road Price):</label>
+        <input type="number" id="bought_for" name="bought_for" step="0.01" required>
+        <input type="submit" value="Raise Automobile Loan Ticket">
+    </form>
+    <h3>Your Automobile Loan Tickets</h3>
+    <table class="table" style="width: 100%; margin: 20px 0;">
+        <thead>
+            <tr>
+                <th>Ticket ID</th>
+                <th>Status</th>
+                <th>Offer</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket._id }}</td>
+                <td>{{ ticket.status|default('pending') }}</td>
+                <td>{% if ticket.offer_amount %}₹{{ ticket.offer_amount }}{% else %}-{% endif %}</td>
+                <td>
+                    {% if ticket.status == 'offer_sent' %}
+                        <form method="POST" action="/accept_offer_automobile/{{ ticket._id }}" style="display:inline;">
+                            <button type="submit" class="approve">Accept</button>
+                        </form>
+                        <form method="POST" action="/decline_offer_automobile/{{ ticket._id }}" style="display:inline; margin-left: 8px;">
+                            <button type="submit" class="decline">Decline</button>
+                        </form>
+                    {% elif ticket.status == 'offer_accepted' %}
+                        <span style="color:green;font-weight:bold;">Offer accepted! Please proceed with your automobile loan process.</span>
+                    {% elif ticket.status == 'offer_declined' or ticket.status == 'declined_by_employee' %}
+                        <span style="color:#e74c3c;font-weight:bold;">Declined</span>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+</body>
+</html> 

@@ -1,0 +1,12 @@
+# MongoDB connection using new cluster URI
+uri = "mongodb+srv://bmpavanganesh:7GRE0qQHFQcv33H2@cluster0.qopxrog.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+client = MongoClient(uri, server_api=ServerApi('1'))
+db = client['user_db']
+users = db['users']
+
+# Test MongoDB connection at startup
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print("MongoDB connection error:", e) 

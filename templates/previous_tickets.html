@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Previous Tickets</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+<body>
+    <div class="container main-content">
+        <h2>Your Previous Tickets</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket._id }}</td>
+                    <td>
+                        {% if ticket.gold_type %}Gold Loan
+                        {% elif ticket.property_type %}Property Loan
+                        {% elif ticket.automobile_type %}Automobile Loan
+                        {% else %}Other{% endif %}
+                    </td>
+                    <td>{{ ticket.status|default('pending') }}</td>
+                    <td>
+                        {% if ticket.gold_type %}
+                            <b>Gold Type:</b> {{ ticket.gold_type }}<br>
+                            <b>Weight:</b> {{ ticket.gold_weight }}g
+                        {% elif ticket.property_type %}
+                            <b>Survey Number:</b> {{ ticket.survey_number }}<br>
+                            <b>Owner:</b> {{ ticket.owner_name }}<br>
+                            <b>Area:</b> {{ ticket.area }} sq.ft
+                        {% elif ticket.automobile_type %}
+                            <b>Type:</b> {{ ticket.automobile_type }}<br>
+                            <b>Owner:</b> {{ ticket.owner_name }}<br>
+                            <b>Year:</b> {{ ticket.purchased_year }}<br>
+                            <b>Bought For:</b> {{ ticket.bought_for }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html> 

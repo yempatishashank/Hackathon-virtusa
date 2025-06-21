@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Automobile Loan Tickets</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+<body>
+    <div class="container main-content">
+        <h2>All Automobile Loan Tickets</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Customer</th>
+                    <th>Status</th>
+                    <th>Type</th>
+                    <th>Owner Name</th>
+                    <th>Purchased Year</th>
+                    <th>RC</th>
+                    <th>License</th>
+                    <th>Bought For</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket._id }}</td>
+                    <td>{{ ticket.username }}</td>
+                    <td>{{ ticket.status|default('pending') }}</td>
+                    <td>{{ ticket.automobile_type }}</td>
+                    <td>{{ ticket.owner_name }}</td>
+                    <td>{{ ticket.purchased_year }}</td>
+                    <td>{% if ticket.rc_doc %}<a href="/static/uploads/{{ ticket.rc_doc }}" target="_blank">View</a>{% else %}N/A{% endif %}</td>
+                    <td>{% if ticket.license_doc %}<a href="/static/uploads/{{ ticket.license_doc }}" target="_blank">View</a>{% else %}N/A{% endif %}</td>
+                    <td>{{ ticket.bought_for }}</td>
+                    <td>
+                        {% if ticket.status == 'pending' and ticket.bought_for %}
+                            <form method="POST" action="/send_offer_automobile/{{ ticket._id }}" style="display:inline;">
+                                <input type="hidden" name="offer_amount" value="{{ (ticket.bought_for|float * 0.7)|round(2) }}">
+                                <div style="margin-top:8px;">
+                                    <b>Offer Amount:</b> ₹{{ (ticket.bought_for|float * 0.7)|round(2) }}
+                                </div>
+                                <button type="submit" class="approve" style="margin-top:8px;">Give Offer</button>
+                            </form>
+                            <form method="POST" action="/decline_automobile_ticket/{{ ticket._id }}" style="display:inline; margin-left: 8px;">
+                                <button type="submit" class="decline">Decline</button>
+                            </form>
+                        {% elif ticket.status == 'offer_sent' %}
+                            <b>Offer Sent:</b> ₹{{ ticket.offer_amount }}
+                        {% elif ticket.status == 'offer_accepted' %}
+                            <b>Offer Accepted by Customer</b>
+                        {% elif ticket.status == 'offer_declined' or ticket.status == 'declined_by_employee' %}
+                            <b>Declined</b>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/employee_dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html> 

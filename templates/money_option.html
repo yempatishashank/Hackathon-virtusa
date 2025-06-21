@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gold Loan Disbursement</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+<body>
+    <div class="container main-content">
+        <h2>Gold Loan Disbursement</h2>
+        <p>Your gold loan is approved! Would you like to receive the money now?</p>
+        <form method="POST" action="/receive_money/{{ ticket_id }}" style="display:inline;">
+            <button type="submit" class="approve">Yes, I want the money</button>
+        </form>
+        <form method="POST" action="/decline_money/{{ ticket_id }}" style="display:inline; margin-left: 16px;">
+            <button type="submit" class="decline">No, cancel my ticket</button>
+        </form>
+    </div>
+</body>
+</html> 

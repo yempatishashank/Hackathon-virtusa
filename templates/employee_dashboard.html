@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+<body>
+    <div class="layout">
+        <nav class="sidebar">
+            <h2>Loan Options</h2>
+            <a href="/gold_loan" class="option-card">Gold Loan</a>
+            <a href="/employee_property_tickets" class="option-card">Property Loan</a>
+            <a href="/employee_automobile_tickets" class="option-card">Automobile Loan</a>
+            <a href="/logout" class="logout">Logout</a>
+        </nav>
+        <div class="container main-content">
+            <h2>Welcome, {{ username }}!</h2>
+            <p>You are logged in as an employee.</p>
+            {% if notifications and notifications|length > 0 %}
+                <div class="notification-area" id="notification-area">
+                    {% for note in notifications %}
+                        <div class="notification {{ note.type }}">{{ note.message }}</div>
+                    {% endfor %}
+                </div>
+                <audio id="notify-sound" src="/static/notify.mp3" preload="auto"></audio>
+                <script>
+                    window.onload = function() {
+                        var audio = document.getElementById('notify-sound');
+                        if (audio) { audio.play(); }
+                    };
+                </script>
+            {% endif %}
+            <h3>Gold Loan Tickets</h3>
+            <table class="employee-tickets-table">
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Customer</th>
+                        <th>Details</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td>{{ ticket._id }}</td>
+                        <td>{{ ticket.username }}</td>
+                        <td style="text-align:left; font-size:0.97em;">
+                            <span class="details-label">Name:</span> <span class="details-value">{{ ticket.name }}</span><br>
+                            <span class="details-label">DOB:</span> <span class="details-value">{{ ticket.dob }}</span><br>
+                            <span class="details-label">ID Number:</span> <span class="details-value">{{ ticket.id_number }}</span><br>
+                            <span class="details-label">Gov ID PDF:</span> <span class="details-value">{% if ticket.gov_id_pdf %}<a href="/static/uploads/{{ ticket.gov_id_pdf }}" target="_blank">View</a>{% else %}N/A{% endif %}</span><br>
+                            <span class="details-label">Gold Type:</span> <span class="details-value">{{ ticket.gold_type }}</span><br>
+                            <span class="details-label">Gold Weight:</span> <span class="details-value">{{ ticket.gold_weight }}g</span><br>
+                            <span class="details-label">Place Bought:</span> <span class="details-value">{{ ticket.place_bought }}</span><br>
+                            <span class="details-label">Jeweler Address:</span> <span class="details-value">{{ ticket.jeweler_address }}</span><br>
+                            <span class="details-label">Gold Photo:</span> <span class="details-value">{% if ticket.gold_photo %}<a href="/static/uploads/{{ ticket.gold_photo }}" target="_blank">View</a>{% else %}N/A{% endif %}</span><br>
+                            <span class="details-label">Declaration:</span> <span class="details-value">{{ ticket.declaration }}</span><br>
+                            <span class="details-label">Bank Details:</span><br>
+                            {% if ticket.bank_details %}
+                                <span class="details-label">&nbsp;&nbsp;Account No:</span> <span class="details-value">{{ ticket.bank_details.account_number|default('N/A') }}</span><br>
+                                <span class="details-label">&nbsp;&nbsp;Name:</span> <span class="details-value">{{ ticket.bank_details.account_name|default('N/A') }}</span><br>
+                                <span class="details-label">&nbsp;&nbsp;Type:</span> <span class="details-value">{{ ticket.bank_details.account_type|default('N/A') }}</span><br>
+                                <span class="details-label">&nbsp;&nbsp;IFSC:</span> <span class="details-value">{{ ticket.bank_details.ifsc_code|default('N/A') }}</span><br>
+                                <span class="details-label">&nbsp;&nbsp;Bank:</span> <span class="details-value">{{ ticket.bank_details.bank_name|default('N/A') }}</span><br>
+                                <span class="details-label">&nbsp;&nbsp;Branch:</span> <span class="details-value">{{ ticket.bank_details.branch_name|default('N/A') }}</span><br>
+                            {% else %}
+                                <span style="color:#e74c3c;">No bank details provided.</span><br>
+                            {% endif %}
+                            {% if ticket.status == 'pending' and ticket.gold_weight %}
+                                <form method="POST" action="/send_offer/{{ ticket._id }}" style="display:inline;">
+                                    <input type="hidden" name="offer_amount" value="{{ (ticket.gold_weight|float * 9000 * 0.9)|round(2) }}">
+                                    <div style="margin-top:8px;">
+                                        <b>Offer Amount:</b> ₹{{ (ticket.gold_weight|float * 9000 * 0.9)|round(2) }}
+                                    </div>
+                                    <button type="submit" class="approve" style="margin-top:8px;">Give Offer</button>
+                                </form>
+                                <form method="POST" action="/decline_ticket/{{ ticket._id }}" style="display:inline; margin-left: 8px;">
+                                    <button type="submit" class="decline">Decline</button>
+                                </form>
+                            {% elif ticket.status == 'offer_sent' %}
+                                <b>Offer Sent:</b> ₹{{ ticket.offer_amount }}
+                            {% elif ticket.status == 'offer_accepted' %}
+                                <b>Offer Accepted by Customer</b>
+                            {% elif ticket.status == 'offer_declined' %}
+                                <b>Offer Declined by Customer</b>
+                            {% endif %}
+                        </td>
+                        <td>{{ ticket.status|default('pending') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+    color: #e2e8f0;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    animation: fadeInBody 0.7s ease;
+}
+
+@keyframes fadeInBody {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+a.logout { color: #fbbf24; margin-top: 20px; }
+a:hover, a:focus { 
+    color: #93c5fd; 
+    text-decoration: underline;
+    text-shadow: 0 0 10px rgba(147, 197, 253, 0.5);
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    color: #1e293b;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5em;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+button, .modal-btn {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.8) 0%, rgba(37, 99, 235, 0.9) 100%);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 14px 0;
+    width: 100%;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+button::before, .modal-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+button:hover::before, .modal-btn:hover::before {
+    left: 100%;
+}
+
+button:hover, .modal-btn:hover, button:focus, .modal-btn:focus {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.9) 0%, rgba(29, 78, 216, 1) 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+button:active, .modal-btn:active {
+    transform: scale(0.98);
+}
+
+button.approve {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.8) 0%, rgba(5, 150, 105, 0.9) 100%);
+}
+button.approve:hover, button.approve:focus {
+    background: linear-gradient(135deg, rgba(5, 150, 105, 0.9) 0%, rgba(4, 120, 87, 1) 100%);
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+button.decline {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.8) 0%, rgba(220, 38, 38, 0.9) 100%);
+}
+button.decline:hover, button.decline:focus {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.9) 0%, rgba(185, 28, 28, 1) 100%);
+    box-shadow: 0 12px 40px rgba(239, 68, 68, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.card, .option-card, .modal-content {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    padding: 32px 24px 24px 24px;
+    margin-bottom: 24px;
+    animation: fadeInCard 0.7s cubic-bezier(.39,.575,.565,1.000);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before, .option-card::before, .modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+@keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+input, select, textarea {
+    padding: 16px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    font-size: 1em;
+    background: rgba(248, 250, 252, 0.15);
+    backdrop-filter: blur(20px);
+    color: #1e293b;
+    transition: all 0.4s ease;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+input::placeholder, select::placeholder, textarea::placeholder {
+    color: #64748b;
+    font-weight: 400;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #60a5fa;
+    box-shadow: 
+        0 0 0 4px rgba(96, 165, 250, 0.15),
+        0 12px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    outline: none;
+    background: rgba(248, 250, 252, 0.25);
+    transform: translateY(-3px) scale(1.02);
+    color: #0f172a;
+}
+
+input:hover, select:hover, textarea:hover {
+    background: rgba(248, 250, 252, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 
+        0 10px 35px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+select option {
+    background: rgba(248, 250, 252, 0.95);
+    color: #1e293b;
+    font-weight: 500;
+    padding: 12px;
+}
+
+.table {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.table th, .table td {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table th {
+    background: rgba(51, 65, 85, 0.8);
+    color: #f8fafc;
+    font-weight: 600;
+    padding: 16px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.table td {
+    color: #e2e8f0;
+    padding: 16px;
+}
+
+.table tr:hover {
+    background: rgba(51, 65, 85, 0.4);
+    transform: scale(1.01);
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.modal-error {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeInBody 0.5s;
+}
+
+.modal-icon {
+    color: #f87171;
+    font-size: 40px;
+    border: 2px solid #f87171;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px auto;
+    background: rgba(30, 41, 59, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.modal-message {
+    font-size: 1.2em;
+    color: #f8fafc;
+    margin-bottom: 24px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background: rgba(15, 23, 42, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(96, 165, 250, 0.6);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(96, 165, 250, 0.8);
+}
+
+p { 
+    color: #cbd5e1; 
+    line-height: 1.6;
+}
+
+/* Glassmorphism utility classes */
+.glass {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-light {
+    background: rgba(51, 65, 85, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.glass-dark {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.modal-btn:hover {
+    background: #a93226;
+} 

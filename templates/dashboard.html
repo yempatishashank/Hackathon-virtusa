@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Star Finance</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            font-family: 'Inter', Arial, sans-serif;
+            color: #e2e8f0;
+        }
+        
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 30px 20px;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .option-card {
+            display: block;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logout {
+            margin-top: 30px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.8) 0%, rgba(245, 158, 11, 0.9) 100%);
+            color: #1e293b;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            display: block;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logout:hover {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
+            color: #0f172a;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px;
+            background: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .welcome-section {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .welcome-section h2 {
+            color: #f8fafc;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .welcome-section p {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+        
+        .tickets-section {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        .tickets-section h3 {
+            color: #f8fafc;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table th {
+            background: rgba(51, 65, 85, 0.8);
+            color: #f8fafc;
+            font-weight: 600;
+            padding: 16px;
+            text-align: left;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .table td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+        
+        .table tr:hover {
+            background: rgba(51, 65, 85, 0.4);
+            transform: scale(1.01);
+        }
+        
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .approve, .decline {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .approve {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.8) 0%, rgba(5, 150, 105, 0.9) 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .approve:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .decline {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.8) 0%, rgba(220, 38, 38, 0.9) 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .decline:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: capitalize;
+            backdrop-filter: blur(10px);
+        }
+        
+        .status-pending {
+            background: rgba(254, 243, 199, 0.8);
+            color: #92400e;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+        
+        .status-approved {
+            background: rgba(209, 250, 229, 0.8);
+            color: #065f46;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .status-declined {
+            background: rgba(254, 226, 226, 0.8);
+            color: #991b1b;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .layout {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <nav class="sidebar">
+            <h2>🏦 Star Finance</h2>
+            <a href="/gold_loan" class="option-card">💰 Gold Loan</a>
+            <a href="/property_loan" class="option-card">🏠 Property Loan</a>
+            <a href="/automobile_loan" class="option-card">🚗 Automobile Loan</a>
+            {% if not is_employee %}
+            <a href="/previous_tickets" class="option-card">📋 History</a>
+            {% endif %}
+            <a href="/logout" class="logout">🚪 Logout</a>
+        </nav>
+        
+        <div class="main-content">
+            <div class="welcome-section">
+                <h2>Welcome back, {{ username }}!</h2>
+                <p>You are logged in as a {{ user_type }}. Manage your financial services below.</p>
+            </div>
+            
+            {% if user_type == 'employee' and tickets %}
+            <div class="tickets-section">
+                <h3>📋 Your Assigned Gold Loan Tickets</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket._id }}</td>
+                            <td>{{ ticket.username }}</td>
+                            <td>
+                                <span class="status-badge status-{{ ticket.status|default('pending') }}">
+                                    {{ ticket.status|default('pending') }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if ticket.status != 'approved' and ticket.status != 'declined' %}
+                                <form method="POST" action="/approve_ticket/{{ ticket._id }}" style="display:inline;">
+                                    <button type="submit" class="approve">✓ Approve</button>
+                                </form>
+                                <form method="POST" action="/decline_ticket/{{ ticket._id }}" style="display:inline;">
+                                    <button type="submit" class="decline">✗ Decline</button>
+                                </form>
+                                {% else %}
+                                    <span class="status-badge status-{{ ticket.status }}">
+                                        {{ ticket.status|capitalize }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html> 

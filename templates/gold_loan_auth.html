@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gold Loan Authentication</title>
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+<body>
+<div class="container">
+    <h2>Gold Loan Authentication</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="dob">Date of Birth:</label>
+        <input type="text" id="dob" name="dob" placeholder="YYYY-MM-DD" required>
+        <label for="id_number">Government ID Number:</label>
+        <input type="text" id="id_number" name="id_number" required>
+        <label for="gov_id_pdf">Upload Government ID (PDF):</label>
+        <input type="file" id="gov_id_pdf" name="gov_id_pdf" accept="application/pdf" required>
+        <hr>
+        <h3>Gold Details</h3>
+        <label for="gold_type">Gold Type:</label>
+        <input type="text" id="gold_type" name="gold_type" required>
+        <label for="gold_weight">Gold Weight (grams):</label>
+        <input type="number" id="gold_weight" name="gold_weight" step="0.01" required>
+        <label for="place_bought">Place Bought:</label>
+        <input type="text" id="place_bought" name="place_bought" required>
+        <label for="jeweler_address">Jeweler Address:</label>
+        <input type="text" id="jeweler_address" name="jeweler_address" required>
+        <label for="gold_photo">Upload Photo of Gold Ornament:</label>
+        <input type="file" id="gold_photo" name="gold_photo" accept="image/*" required>
+        <label for="declaration">Declaration:</label>
+        <textarea id="declaration" name="declaration" rows="3" required>I declare that the above information is true and the gold is not under any dispute.</textarea>
+        <hr>
+        <h3>Bank Details</h3>
+        <label for="account_number">Account Number:</label>
+        <input type="text" id="account_number" name="account_number" required>
+        <label for="account_name">Account Holder Name:</label>
+        <input type="text" id="account_name" name="account_name" required>
+        <label for="account_type">Account Type:</label>
+        <select id="account_type" name="account_type" required>
+            <option value="savings">Savings</option>
+            <option value="current">Current</option>
+        </select>
+        <label for="ifsc_code">IFSC Code:</label>
+        <input type="text" id="ifsc_code" name="ifsc_code" required>
+        <label for="bank_name">Bank Name:</label>
+        <input type="text" id="bank_name" name="bank_name" required>
+        <label for="branch_name">Branch Name:</label>
+        <input type="text" id="branch_name" name="branch_name" required>
+        <input type="submit" value="Authenticate & Continue">
+    </form>
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+</body>
+</html> 

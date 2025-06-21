@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Handled Tickets History</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+<body>
+    <div class="container main-content">
+        <h2>Tickets You Handled</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Customer</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket in tickets %}
+                <tr>
+                    <td>{{ ticket._id }}</td>
+                    <td>{{ ticket.username }}</td>
+                    <td>{{ ticket.gold_type and 'Gold Loan' or ticket.property_type and 'Property Loan' or ticket.automobile_type and 'Automobile Loan' or 'Other' }}</td>
+                    <td>{{ ticket.status|default('pending') }}</td>
+                    <td>
+                        {% if ticket.gold_type %}
+                            <b>Gold Type:</b> {{ ticket.gold_type }}<br>
+                            <b>Weight:</b> {{ ticket.gold_weight }}g
+                        {% elif ticket.property_type %}
+                            <b>Property Type:</b> {{ ticket.property_type }}<br>
+                            <b>Value:</b> {{ ticket.property_value }}
+                        {% elif ticket.automobile_type %}
+                            <b>Automobile Type:</b> {{ ticket.automobile_type }}<br>
+                            <b>Value:</b> {{ ticket.automobile_value }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/employee_dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html> 

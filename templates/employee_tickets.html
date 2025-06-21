@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Gold Loan Tickets</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/css/global.css">
+    <style>
+        .ticket-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
+            overflow: hidden;
+            border: 1px solid #e0e7ef;
+        }
+        .ticket-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 1fr;
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-bottom: 1px solid #e0e7ef;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .ticket-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr 1fr;
+            padding: 20px;
+            align-items: start;
+            gap: 16px;
+        }
+        .ticket-body > div {
+            color: black; /* Set text color to black */
+        }
+        .ticket-details {
+            line-height: 1.6;
+            font-size: 0.9em;
+            color: black; /* Set text color to black */
+        }
+        .ticket-details strong {
+            color: #334155;
+        }
+        .ticket-details .no-details {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 900px;">
+        <h2>Gold Loan Tickets</h2>
+        <div class="ticket-header">
+            <div>Ticket ID</div>
+            <div>Customer</div>
+            <div>Details</div>
+            <div>Status</div>
+        </div>
+        {% for ticket in tickets %}
+        <div class="ticket-card">
+            <div class="ticket-body">
+                <div>{{ ticket._id }}</div>
+                <div>{{ ticket.username }}</div>
+                <div class="ticket-details">
+                    <strong>Name:</strong> {{ ticket.name|default('N/A') }}<br>
+                    <strong>DOB:</strong> {{ ticket.dob|default('N/A') }}<br>
+                    <strong>ID Number:</strong> {{ ticket.id_number|default('N/A') }}<br>
+                    <strong>Gov ID PDF:</strong> {% if ticket.gov_id_pdf %}<a href="/static/uploads/{{ ticket.gov_id_pdf }}" target="_blank">View PDF</a>{% else %}N/A{% endif %}<br>
+                    <strong>Gold Type:</strong> {{ ticket.gold_type|default('N/A') }}<br>
+                    <strong>Gold Weight:</strong> {{ ticket.gold_weight|default('N/A') }} g<br>
+                    <strong>Place Bought:</strong> {{ ticket.place_bought|default('N/A') }}<br>
+                    <strong>Jeweler Address:</strong> {{ ticket.jeweler_address|default('N/A') }}<br>
+                    <strong>Gold Photo:</strong> {% if ticket.gold_photo %}<a href="/static/uploads/{{ ticket.gold_photo }}" target="_blank">View Photo</a>{% else %}N/A{% endif %}<br>
+                    <strong>Declaration:</strong> {{ ticket.declaration|default('N/A') }}<br>
+                    <strong>Bank Details:</strong>
+                    {% if ticket.bank_details and ticket.bank_details.account_number %}
+                        <br>
+                        &nbsp;&nbsp;<strong>Account Number:</strong> {{ ticket.bank_details.account_number }}<br>
+                        &nbsp;&nbsp;<strong>Account Name:</strong> {{ ticket.bank_details.account_name }}<br>
+                        &nbsp;&nbsp;<strong>Account Type:</strong> {{ ticket.bank_details.account_type }}<br>
+                        &nbsp;&nbsp;<strong>IFSC Code:</strong> {{ ticket.bank_details.ifsc_code }}<br>
+                        &nbsp;&nbsp;<strong>Bank Name:</strong> {{ ticket.bank_details.bank_name }}<br>
+                        &nbsp;&nbsp;<strong>Branch Name:</strong> {{ ticket.bank_details.branch_name }}
+                    {% else %}
+                        <span class="no-details">No bank details provided.</span>
+                    {% endif %}
+                </div>
+                <div>{{ ticket.status|default('pending') }}</div>
+            </div>
+        </div>
+        {% endfor %}
+        <a href="/dashboard">Back to Dashboard</a>
+    </div>
+</body>
+</html> 
